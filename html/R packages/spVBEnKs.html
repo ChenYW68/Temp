@@ -45,24 +45,24 @@ spVBEnKs(
 <p>option to provide a list form data, which contains 8 indexs, as follows: <code>n,
 Nt, N.BAUs, Y_ts, X_ts, BAUs.Dist, Adj.Mat</code> and <code>Hs</code>, where <code>n</code> is the observed spatial sample size;
 <code>Nt</code> is the temporal index length; <code>N.BAUs</code> is the number of grids;
-<code>Y_ts</code> is an Nt x n dimentional observed matrix.
-<code>X_ts</code> ia an p x n x Nt dimentional array.
+<code>Y_ts</code> is an Nt x n dimentional observed spatial-temporal matrix.
+<code>X_ts</code> is an p x n x Nt dimentional array.
 <code>BAUs.Dist</code> is an N.BAUs x N.BAUs dimentional distance matrix based on the grids which created by INLA.
 <code>Adj.Mat</code> is an adjacent matrix of grids with elements <i>W_{ij} =1</i> if i and j is first-order neighbors, and 0 otherwise.</p>
 </td></tr>
 <tr valign="top"><td><code>prior</code></td>
 <td>
-<p>option to provide a list. This list contains model parameters prior information:
-<i>&beta;, &tau;^2, &theta;_1</i>. See subsequent examples for more details.</p>
+<p>option to provide a list. This list contains prior information of three parameters:
+<i>&beta;, &tau;^2, &theta;_1</i>. See subsequent an example for more details.</p>
 </td></tr>
 <tr valign="top"><td><code>IS</code></td>
 <td>
 <p>option to provide a list which contains sample and weight of
-three parameters <i>&theta;_2, K, k_0</i>.</p>
+three parameters <i>&theta;_2, K, K_0</i>.</p>
 </td></tr>
 <tr valign="top"><td><code>para</code></td>
 <td>
-<p>option to provide a list which provided initialize value of parameters. See subsequent examples for more details.</p>
+<p>option to provide a list which provided initialize value of parameters. See subsequent an example for more details.</p>
 </td></tr>
 <tr valign="top"><td><code>true.para</code></td>
 <td>
@@ -98,8 +98,7 @@ Otherwise, nothing about VB process is printed to the screen.</p>
 </td></tr>
 <tr valign="top"><td><code>Remove.CPU.Count</code></td>
 <td>
-<p>option to remove the number of CPU when <code>parallel</code> is TRUE,
-to make sure the system does something else. Default is 1.</p>
+<p>option to remove the number of CPU when <code>parallel</code> is TRUE to make sure the system does something else. Default is 1.</p>
 </td></tr>
 <tr valign="top"><td><code>N.Chunk</code></td>
 <td>
@@ -123,7 +122,7 @@ to make sure the system does something else. Default is 1.</p>
 <h3>Details</h3>
 
 <p>For details on the implementation of 'spVBEnKs', see the website
-<a href="https://mgallow.github.io/spVBEnKs/articles/Details.html">https://mgallow.github.io/spVBEnKs/articles/Details.html</a>.
+<a href="https://chenyw68.github.io/Temp/html/Example/Example.html">https://chenyw68.github.io/Temp/html/Example/Example.html</a>.
 </p>
 
 
@@ -146,7 +145,7 @@ to make sure the system does something else. Default is 1.</p>
 </td></tr>
 <tr valign="top"><td><code>PIU</code></td>
 <td>
-<p>a list of parameter estimation.</p>
+<p>list of parameter estimation.</p>
 </td></tr>
 <tr valign="top"><td><code>IS</code></td>
 <td>
