@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Prediction of spVBEnKs class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for predict.spVBEnKs {spCalibration}"><tr><td>predict.spVBEnKs {spCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Prediction of spVBEnKs class</h2>
+
+<h3>Description</h3>
+
+<p>Prediction of spVBEnKs class
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'spVBEnKs'
+predict(
+  x,
+  test,
+  site = NULL,
+  method = c("ensemble", "mean"),
+  transf = c("normal", "square", "log"),
+  ncol.layout = 3
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>the class from return by spVBEnKs().</p>
+</td></tr>
+<tr valign="top"><td><code>test</code></td>
+<td>
+<p>option to provide a list form data, which contains 4 indexs, as follows: <code>
+Y_ts, X_ts, Hs</code> and <code>City_Name</code>, where <code>Y_ts, X_ts</code> and <code>Hs</code>
+are set as function spVBEnKs() and <code>City_Name</code> is the city name need to test.</p>
+</td></tr>
+<tr valign="top"><td><code>site</code></td>
+<td>
+<p>option to provide a data frame which contains information of monitoring station.
+Default is NULL.</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>choose predictive method: ensemble or mean. Default is ensemble.</p>
+</td></tr>
+<tr valign="top"><td><code>transf</code></td>
+<td>
+<p>choose method of data transform: normal, square, log. Default is normal</p>
+</td></tr>
+<tr valign="top"><td><code>ncol.layout</code></td>
+<td>
+<p>option to provide the number of columns for figure layout.</p>
+</td></tr>
+</table>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="spVBEnKs.html">spVBEnKs</a></code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>spCalibration</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

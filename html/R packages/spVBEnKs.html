@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Spatio-temporal data calibration by vaiational Bayesian and...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for spVBEnKs {spCalibration}"><tr><td>spVBEnKs {spCalibration}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Spatio-temporal data calibration by vaiational Bayesian and ensemblem kalman smoother</h2>
+
+<h3>Description</h3>
+
+<p>Spatio-temporal data calibration by vaiational Bayesian and ensemblem kalman smoother.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+spVBEnKs(
+  data = NULL,
+  prior = NULL,
+  IS = NULL,
+  para = NULL,
+  true.para = NULL,
+  parallel = FALSE,
+  verbose = TRUE,
+  verbose.VB = FALSE,
+  Ensemble.size = 50,
+  cs = 0.3,
+  ct = 1,
+  Remove.CPU.Count = 1,
+  N.Chunk = 1,
+  itMax = 100,
+  tol.vb = 0.001,
+  tol.real = 0.001
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>option to provide a list form data, which contains 8 indexs, as follows: <code>n,
+Nt, N.BAUs, Y_ts, X_ts, BAUs.Dist, Adj.Mat</code> and <code>Hs</code>, where <code>n</code> is the observed spatial sample size;
+<code>Nt</code> is the temporal index length; <code>N.BAUs</code> is the number of grids;
+<code>Y_ts</code> is an Nt x n dimentional observed matrix.
+<code>X_ts</code> ia an p x n x Nt dimentional array.
+<code>BAUs.Dist</code> is an N.BAUs x N.BAUs dimentional distance matrix based on the grids which created by INLA.
+<code>Adj.Mat</code> is an adjacent matrix of grids with elements <i>W_{ij} =1</i> if i and j is first-order neighbors, and 0 otherwise.</p>
+</td></tr>
+<tr valign="top"><td><code>prior</code></td>
+<td>
+<p>option to provide a list. This list contains model parameters prior information:
+<i>&beta;, &tau;^2, &theta;_1</i>. See subsequent examples for more details.</p>
+</td></tr>
+<tr valign="top"><td><code>IS</code></td>
+<td>
+<p>option to provide a list which contains sample and weight of
+three parameters <i>&theta;_2, K, k_0</i>.</p>
+</td></tr>
+<tr valign="top"><td><code>para</code></td>
+<td>
+<p>option to provide a list which provided initialize value of parameters. See subsequent examples for more details.</p>
+</td></tr>
+<tr valign="top"><td><code>true.para</code></td>
+<td>
+<p>option to provide true parameters when need to simulation.
+Default is NULL.</p>
+</td></tr>
+<tr valign="top"><td><code>parallel</code></td>
+<td>
+<p>option to whether need to parallel compute in importance sampling process.
+Default is FALSE.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE, progress of the parameter estimation is printed to the screen.
+Otherwise, nothing is printed to the screen.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose.VB</code></td>
+<td>
+<p>if TRUE, progress of the parameter estimation in VB process is printed to the screen.
+Otherwise, nothing about VB process is printed to the screen.</p>
+</td></tr>
+<tr valign="top"><td><code>Ensemble.size</code></td>
+<td>
+<p>option to provide ensemble size. Default is 50.</p>
+</td></tr>
+<tr valign="top"><td><code>cs</code></td>
+<td>
+<p>option to provide the ratio of maxmum distance used to taper in space.</p>
+</td></tr>
+<tr valign="top"><td><code>ct</code></td>
+<td>
+<p>option to provide the temporal tapering range.</p>
+</td></tr>
+<tr valign="top"><td><code>Remove.CPU.Count</code></td>
+<td>
+<p>option to remove the number of CPU when <code>parallel</code> is TRUE,
+to make sure the system does something else. Default is 1.</p>
+</td></tr>
+<tr valign="top"><td><code>N.Chunk</code></td>
+<td>
+<p>option to divide into several parts for parameter estimation of importance sampling when size is large.</p>
+</td></tr>
+<tr valign="top"><td><code>itMax</code></td>
+<td>
+<p>maximum number of iterations. Defaults to 1e2.</p>
+</td></tr>
+<tr valign="top"><td><code>tol.vb</code></td>
+<td>
+<p>relative convergence tolerance in importance sampling process. Defaults to 1e-3.</p>
+</td></tr>
+<tr valign="top"><td><code>tol.rel</code></td>
+<td>
+<p>relative convergence tolerance  in complete parameter estimation. Defaults to 1e-3.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>For details on the implementation of 'spVBEnKs', see the website
+<a href="https://mgallow.github.io/spVBEnKs/articles/Details.html">https://mgallow.github.io/spVBEnKs/articles/Details.html</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>returns class object <code>spVBEnKs</code> which includes:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>Call</code></td>
+<td>
+<p>function call.</p>
+</td></tr>
+<tr valign="top"><td><code>FinalEst</code></td>
+<td>
+<p>estimated model parameters.</p>
+</td></tr>
+<tr valign="top"><td><code>ParaEst</code></td>
+<td>
+<p>the proce list of etimation of model parameters.</p>
+</td></tr>
+<tr valign="top"><td><code>PIU</code></td>
+<td>
+<p>a list of parameter estimation.</p>
+</td></tr>
+<tr valign="top"><td><code>IS</code></td>
+<td>
+<p>posterior sample and its weight by importance sampling.</p>
+</td></tr>
+<tr valign="top"><td><code>Ks</code></td>
+<td>
+<p>posterior ensemble by TaEnKs algorithm.</p>
+</td></tr>
+<tr valign="top"><td><code>loglik</code></td>
+<td>
+<p>final estimated loglikelihood.</p>
+</td></tr>
+<tr valign="top"><td><code>Iterations</code></td>
+<td>
+<p>number of iterations.</p>
+</td></tr>
+<tr valign="top"><td><code>maxit</code></td>
+<td>
+<p>maximum number of iterations.</p>
+</td></tr>
+<tr valign="top"><td><code>Fitting_RMSE</code></td>
+<td>
+<p>the root mean squared error by fit model.</p>
+</td></tr>
+<tr valign="top"><td><code>Fitting_MB</code></td>
+<td>
+<p>the mean bias by fit model.</p>
+</td></tr>
+<tr valign="top"><td><code>Fitting_NMB</code></td>
+<td>
+<p>the normalized mean bias by fit model.</p>
+</td></tr>
+<tr valign="top"><td><code>Fitting_NME</code></td>
+<td>
+<p>the normalized mean error by fit model.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>YeWen Chen <a href="mailto:chenyw20150908@163.com">chenyw20150908@163.com</a>
+</p>
+
+
+<h3>References</h3>
+
+
+<ul>
+<li><p> Berrocal, V. J.; Gelfand, A. E.; Holland, D. M. A bivariate space-time downscaler under space and time
+misalignment. The annals of applied statistics 2010, 4, 1942.
+</p>
+</li>
+<li><p> Berrocal, V. J.; Gelfand, A. E.; Holland, D. M. A spatio-temporal downscaler for output from numerical models.
+Journal of agricultural, biological, and environmental statistics 2010, 15, 176–197.
+</p>
+</li>
+<li><p> Katzfuss, M.; Stroud, J. R.; Wikle, C. K. Ensemble Kalman methods for high-dimensional
+hierarchical dynamic space-time models. Journal of the American Statistical Association 2019, 1–43.
+</p>
+</li>
+<li><p> Cressie, N.; Zammit-Mangion, A.; Wikle, C. K. Spatio-Temporal Statistics with R; Chapman and Hall, 2019.
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+set.seed(35426)
+#####################################################################
+#                       Create grids  by INLA
+#####################################################################
+grid &lt;- ProduceGrid(Site,
+                    max.edge = c(.3, .7), #0.3,0.7
+                    offset = c(.4, .6), #0.4, 0.6
+                    cutoff =.1, #0.1
+                    col = "black", size = 1)
+grid$plot.grid
+#####################################################################
+#                          Mapping matrix: H
+#####################################################################
+Data_Str &lt;- ProduceHmatrix(grid, site = Site, threshold = 1e5)
+#####################################################################
+#                             Prior
+#####################################################################
+prior &lt;- list(
+               beta = list(mu = c(0, 1), Sigma2 = 1e5*diag(2))
+             , nugget.tau2 = list(a = 2, b = 1)
+             , theta1 = list(mu = 0.005, Sigma2 =  1e5)
+             )
+#####################################################################
+#                         Importance sampling
+#####################################################################
+IS.size &lt;- 50
+IS &lt;- list(theta2_random_sample = runif(IS.size, 1e-3, 5)
+         , K_random_sample = runif(IS.size, 1e-3, 15)
+         , K0_random_sample = runif(IS.size, 1e-3, 15)
+         , G_theta2_weight = rep(1/IS.size, IS.size)
+         , G_k_weight = rep(1/IS.size, IS.size)
+         , G_k0_weight = rep(1/IS.size, IS.size)
+         , IS.size = IS.size
+         , Thresh = c(1, 1, 1)
+         )
+#####################################################################
+ #                      initialize  parameters
+#####################################################################
+initial.para &lt;- list(
+                     beta = list(E_beta = c(2, 0.5), Sigma2 = diag(2))
+                   , theta1 = list(E_theta1 = 0.005, Sigma2 = 2)
+                   , k = list(E_k = 5, a = 2, b = 1)
+                   , k0 = list(E_k0 = 5, a = 2, b = 1)
+                   , theta2 = list(mu = 1)
+                   , tau2 = list(E_tau2 = 1, a = 2, b = 1)
+                    )
+#####################################################################
+#                             Data truncation
+#####################################################################
+YearMonth &lt;- c(201511, 201512, 201601)  # 201506,201507,201508 # 201511, 201512, 201601
+Yts_Xts &lt;- ParYtsXts(Model_Base_Tab, YearMonth = YearMonth)
+#####################################################################
+#                           Leave one city out
+#####################################################################
+city_num = 1
+GSD = Test_Train_Fun(Site, Data_Str, Yts_Xts, city_num)
+Train = GSD$Train
+Test =  GSD$Test
+Train$Y_ts = sqrt(Train$Y_ts)
+Train$X_ts = sqrt(Train$X_ts)
+Test$X_ts = sqrt(Test$X_ts)
+#####################################################################
+#                           execution model
+#####################################################################
+CV &lt;- spVBEnKs(data = Train, prior = prior, IS = IS,
+               para = initial.para, true.para = NULL,
+               parallel = TRUE, verbose = TRUE,
+               verbose.VB = TRUE, Ensemble.size = 50,
+               cs = 0.4, ct = 1,
+               Remove.CPU.Count = 2, N.Chunk = 1,
+               itMax = 1e2, tol.vb = 1e-2,
+               tol.real = 1e-3)
+######################################################################
+#                           output
+######################################################################
+print(CV)
+######################################################################
+#                         prediction
+######################################################################
+# load("./data/Generate_Data/Test/CV.Rdata")
+P &lt;- predict(x = CV, test = Test, site = Site,
+             method = c("ensemble"),  # ensemble, mean
+             transf = "square", ncol.layout = 2)
+P$error
+P$ensemble.plot
+######################################################################
+#                      the distributions of parameters
+######################################################################
+plot &lt;- plot(x = CV, para = NULL, IS = NULL, n = 500, title.size = 12,
+              text.size = 8, line.size = 1)
+plot$Beta.plot
+plot$Close.Dist
+plot$NoClose.Dist
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>spCalibration</em> version 0.1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>
