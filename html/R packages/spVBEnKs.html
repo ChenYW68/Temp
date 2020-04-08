@@ -26,9 +26,9 @@ spVBEnKs(
   verbose = TRUE,
   verbose.VB = FALSE,
   Ensemble.size = 50,
-  cs = 0.3,
+  cs = 0.5,
   ct = 1,
-  Remove.CPU.Count = 1,
+  Remove.Cores.Count = 1,
   N.Chunk = 1,
   itMax = 100,
   tol.vb = 0.001,
@@ -96,9 +96,9 @@ Otherwise, nothing about VB process is printed to the screen.</p>
 <td>
 <p>option to provide the temporal tapering range.</p>
 </td></tr>
-<tr valign="top"><td><code>Remove.CPU.Count</code></td>
+<tr valign="top"><td><code>Remove.Cores.Count</code></td>
 <td>
-<p>option to remove the number of CPU when <code>parallel</code> is TRUE to make sure the system does something else. Default is 1.</p>
+<p>option to remove the number of Cores when <code>parallel</code> is TRUE to make sure the system does something else. Default is 1.</p>
 </td></tr>
 <tr valign="top"><td><code>N.Chunk</code></td>
 <td>
@@ -285,7 +285,7 @@ CV &lt;- spVBEnKs(data = Train, prior = prior, IS = IS,
                para = initial.para, true.para = NULL,
                parallel = TRUE, verbose = TRUE,
                verbose.VB = TRUE, Ensemble.size = 50,
-               cs = 0.4, ct = 1,
+               cs = 0.5, ct = 1,
                Remove.CPU.Count = 2, N.Chunk = 1,
                itMax = 1e2, tol.vb = 1e-2,
                tol.real = 1e-3)
